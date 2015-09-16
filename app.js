@@ -1,6 +1,8 @@
+'use strict';
+
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+//var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -37,6 +39,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+  /*jshint unused: false*/
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
@@ -44,10 +47,12 @@ if (app.get('env') === 'development') {
       error: err
     });
   });
+  /*jshint unused: true*/
 }
 
 // production error handler
 // no stacktraces leaked to user
+/*jshint unused: false*/
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
@@ -55,6 +60,7 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+/*jshint unused: true*/
 
 
 module.exports = app;
