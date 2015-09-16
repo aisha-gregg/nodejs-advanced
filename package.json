@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "DEBUG=nodepop:* nodemon ./bin/www",
-    "hints": "jshint .; ./node_modules/.bin/jscs ."
+    "hints": "jshint . && ./node_modules/.bin/jscs .",
+    "installDB": "node install_db.js"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -12,6 +13,7 @@
     "debug": "~2.2.0",
     "ejs": "~2.3.3",
     "express": "~4.13.1",
+    "mongoose": "^4.1.7",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0"
   },
