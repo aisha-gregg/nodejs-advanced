@@ -66,7 +66,6 @@ function initAnuncios(cb) {
 
 function initUsuarios(cb) {
     var Usuario = mongoose.model('Usuario');
-    var flow = require('./lib/flowControl');
 
     Usuario.remove({}, ()=> {
 

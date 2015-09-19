@@ -49,24 +49,7 @@ anuncioSchema.statics.cargaJson = function(fichero, cb) {
 };
 
 anuncioSchema.statics.createRecord = function(nuevo, cb) {
-
-    var anuncio = new Anuncio();
-
-    anuncio.nombre = nuevo.nombre;
-    anuncio.venta = nuevo.venta;
-    anuncio.precio = nuevo.precio;
-    anuncio.foto = nuevo.foto;
-    anuncio.tags = nuevo.tags;
-
-    anuncio.save(function(err, anuncioCreado) {
-        if (err) {
-            return cb(err);
-        }
-
-        console.info('Anuncio.createRecord', anuncioCreado.nombre, anuncioCreado._id);
-        cb(null, anuncioCreado);
-    });
-
+    new Anuncio().save(cb);
 };
 
 var Anuncio = mongoose.model('Anuncio', anuncioSchema);
