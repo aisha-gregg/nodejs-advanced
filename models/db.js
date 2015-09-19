@@ -16,5 +16,6 @@ mongoose.connect('mongodb://localhost/nodepop');
 
 // Cargamos las definiciones de todos nuestros modelos
 require('./Anuncio');
+require('./Usuario');
 
 module.exports = db;
