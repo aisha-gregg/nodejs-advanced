@@ -28,6 +28,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+// API v1
+app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

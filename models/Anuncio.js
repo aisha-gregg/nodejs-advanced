@@ -49,7 +49,41 @@ anuncioSchema.statics.cargaJson = function(fichero, cb) {
 };
 
 anuncioSchema.statics.createRecord = function(nuevo, cb) {
-    new Anuncio().save(cb);
+    new Anuncio(nuevo).save(cb);
+};
+
+anuncioSchema.statics.list = function(startRow, numRows, sortField, includeTotal, cb) {
+
+    var query = Anuncio.find({});
+
+    query.sort(sortField);
+
+    query.skip(startRow);
+
+    query.limit(numRows);
+
+    //query.select('nombre venta');
+
+    return query.exec(function(err, rows) {
+        if (err) { return cb(err);}
+
+        var result = {rows: rows};
+
+        if (!includeTotal) {
+            return cb(null, result);
+        }
+
+        // incluir propiedad total
+        Anuncio.getCount({}, function(err, total){
+            if (err) { return cb(err);}
+            result.total = total;
+            return cb(null, result);
+        });
+    });
+};
+
+anuncioSchema.statics.getCount = function(filter, cb) {
+    return Anuncio.count(filter, cb);
 };
 
 var Anuncio = mongoose.model('Anuncio', anuncioSchema);
