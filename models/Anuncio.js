@@ -19,6 +19,7 @@ var anuncioSchema = mongoose.Schema({
  */
 anuncioSchema.statics.cargaJson = function(fichero, cb) {
     var fs = require('fs');
+    var flow = require('../lib/flowControl');
 
     // Encodings: https://nodejs.org/api/buffer.html
     fs.readFile(fichero, {encoding:'utf8'}, function(err, data) {
@@ -33,32 +34,7 @@ anuncioSchema.statics.cargaJson = function(fichero, cb) {
             var anuncios = JSON.parse(data).anuncios;
             var numAnuncios = anuncios.length;
 
-            // función ayudante,
-            // que va a hacer llamadas a func,
-            // con cada elemento del array que recibe (arr)
-            // cuando acabe llamará a callbackFin
-            var serie = function(arr, func, callbackFin) {
-                if (arr.length > 0) {
-                    // saco el primer elemento del array y
-                    // llamo a escribeTras2Segundos con el elemento
-                    func(arr.shift(), function(err) {
-                        if (err) {
-                            return callbackFin(err);
-                        }
-
-                        // cuando termine func, vuelvo a
-                        // llamarme a mismo (serie) para procesar el siguiente
-                        serie(arr, func, callbackFin);
-                    });
-                } else {
-                    // si arr.length llega a 0 es que he acabado,
-                    // llamo a la función que pasaron
-                    // para ello, callbackFin
-                    callbackFin();
-                }
-            };
-
-            serie(anuncios, Anuncio.createRecord, (err)=> {
+            flow.serialArray(anuncios, Anuncio.createRecord, (err)=> {
                 if (err) {
                     return cb(err);
                 }

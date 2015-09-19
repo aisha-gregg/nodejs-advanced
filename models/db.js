@@ -3,7 +3,10 @@
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'mongodb connection error:'));
+db.on('error', function(err) {
+    console.error('mongodb connection error:', err);
+    process.exit(1);
+});
 
 db.once('open', function() {
     console.info('Connected to mongodb.');

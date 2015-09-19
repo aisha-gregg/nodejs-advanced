@@ -28,7 +28,7 @@ function runInstallScript() {
 
     Anuncio.remove({}, ()=> {
 
-        console.log('Anuncios borrados.')
+        console.log('Anuncios borrados.');
 
         // Cargar anuncios.json
         var fichero = './anuncios.json';

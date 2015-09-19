@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "DEBUG=nodepop:* nodemon ./bin/www",
-    "hints": "jshint . && ./node_modules/.bin/jscs .",
+    "hints": "jshint . && ./node_modules/.bin/jscs . || true",
     "installDB": "node install_db.js"
   },
   "dependencies": {
