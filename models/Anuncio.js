@@ -11,7 +11,7 @@ var anuncioSchema = mongoose.Schema({
     venta: Boolean,
     precio: Number,
     foto: String,
-    tags: []
+    tags: [String]
 });
 
 /**
@@ -52,9 +52,9 @@ anuncioSchema.statics.createRecord = function(nuevo, cb) {
     new Anuncio(nuevo).save(cb);
 };
 
-anuncioSchema.statics.list = function(startRow, numRows, sortField, includeTotal, cb) {
+anuncioSchema.statics.list = function(startRow, numRows, sortField, includeTotal, filters, cb) {
 
-    var query = Anuncio.find({});
+    var query = Anuncio.find(filters);
 
     query.sort(sortField);
 
