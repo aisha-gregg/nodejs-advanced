@@ -29,11 +29,12 @@ function runInstallScript() {
     async.series([
         initAnuncios,
         initUsuarios
-        ], (err, results) => {
+        ], (err) => {
             if (err) {
                 console.error('Hubo un error: ', err);
                 return process.exit(1);
             }
+
             return process.exit(0);
         }
     );
@@ -73,7 +74,7 @@ function initUsuarios(cb) {
             {nombre: 'admin', email: 'jamg44@gmail.com', clave: '123'}
         ];
 
-        async.eachSeries(usuarios, Usuario.createRecord, (err, results)=> {
+        async.eachSeries(usuarios, Usuario.createRecord, (err)=> {
             if (err) {
                 return process.exit(1);
             }

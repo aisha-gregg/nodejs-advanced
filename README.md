@@ -25,6 +25,12 @@ npm run jscs
 
 ## API v1 info
 
+### Language
+
+All requests that return error messages are localized to english, if you want to 
+change language make the request with the header x-lang set to other language, 
+i.e. x-lang: es 
+
 ### Error example
     {
       "ok": false,
@@ -42,7 +48,6 @@ Result:
 
     {
       "ok": true, 
-      "message": "Enjoy your token!", 
       "token": "..."
     }
 

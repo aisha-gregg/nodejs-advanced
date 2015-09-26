@@ -1,12 +1,12 @@
 'use strict';
 
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
 //var tagSchema = mongoose.Schema({
 //    nombre: String
 //});
 
-var anuncioSchema = mongoose.Schema({
+let anuncioSchema = mongoose.Schema({
     nombre: String,
     venta: Boolean,
     precio: Number,
@@ -18,8 +18,8 @@ var anuncioSchema = mongoose.Schema({
  * carga un json de anuncios
  */
 anuncioSchema.statics.cargaJson = function(fichero, cb) {
-    var fs = require('fs');
-    var flow = require('../lib/flowControl');
+    let fs = require('fs');
+    let flow = require('../lib/flowControl');
 
     // Encodings: https://nodejs.org/api/buffer.html
     fs.readFile(fichero, {encoding:'utf8'}, function(err, data) {
@@ -31,8 +31,8 @@ anuncioSchema.statics.cargaJson = function(fichero, cb) {
 
         if (data) {
 
-            var anuncios = JSON.parse(data).anuncios;
-            var numAnuncios = anuncios.length;
+            let anuncios = JSON.parse(data).anuncios;
+            let numAnuncios = anuncios.length;
 
             flow.serialArray(anuncios, Anuncio.createRecord, (err)=> {
                 if (err) {
@@ -54,7 +54,7 @@ anuncioSchema.statics.createRecord = function(nuevo, cb) {
 
 anuncioSchema.statics.list = function(startRow, numRows, sortField, includeTotal, filters, cb) {
 
-    var query = Anuncio.find(filters);
+    let query = Anuncio.find(filters);
 
     query.sort(sortField);
 
@@ -67,15 +67,16 @@ anuncioSchema.statics.list = function(startRow, numRows, sortField, includeTotal
     return query.exec(function(err, rows) {
         if (err) { return cb(err);}
 
-        var result = {rows: rows};
+        let result = {rows: rows};
 
         if (!includeTotal) {
             return cb(null, result);
         }
 
         // incluir propiedad total
-        Anuncio.getCount({}, function(err, total){
-            if (err) { return cb(err);}
+        Anuncio.getCount({}, function(err, total) {
+            if (err) {return cb(err);}
+
             result.total = total;
             return cb(null, result);
         });

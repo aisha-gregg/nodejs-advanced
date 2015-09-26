@@ -25,6 +25,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// registrar lenguajes
+var lang = require('./lib/lang');
+lang.registerLang('en'); // el primero es el idioma por defecto
+lang.registerLang('es');
+
+// poner lenguaje en request leyendo cabecera x-lang
+app.use((req, res, next)=> {
+    req.lang = req.get('x-lang');
+    next();
+});
+
 app.use('/', routes);
 app.use('/users', users);
 

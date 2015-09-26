@@ -1,37 +1,40 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
-var mongoose = require('mongoose');
-var Anuncio = mongoose.model('Anuncio');
+let mongoose = require('mongoose');
+let Anuncio = mongoose.model('Anuncio');
 
 // Auth con JWT
-var jwtAuth = require('../../lib/jwtAuth');
+let jwtAuth = require('../../lib/jwtAuth');
 router.use(jwtAuth());
 
 router.get('/', function(req, res) {
 
     //console.log('jwt decoded', req.decoded);
 
-    var start = parseInt(req.query.start) || 0;
-    var limit = parseInt(req.query.limit) || 1000; // nuestro api devuelve 1000 registros como máximo en cada llamada
-    var sort = req.query.sort || '_id';
-    var includeTotal = req.query.includeTotal === 'true';
-    var filters = {};
+    let start = parseInt(req.query.start) || 0;
+    let limit = parseInt(req.query.limit) || 1000; // nuestro api devuelve 1000 registros como máximo en cada llamada
+    let sort = req.query.sort || '_id';
+    let includeTotal = req.query.includeTotal === 'true';
+    let filters = {};
     if (typeof req.query.tag !== 'undefined') {
         filters.tags = req.query.tag;
     }
+
     if (typeof req.query.venta !== 'undefined') {
         filters.venta = req.query.venta;
     }
+
     if (typeof req.query.precio !== 'undefined' && req.query.precio !== '-') {
         if (req.query.precio.indexOf('-') !== -1) {
             filters.precio = {};
-            var rango = req.query.precio.split('-');
+            let rango = req.query.precio.split('-');
             if (rango[0] !== '') {
                 filters.precio.$gte = rango[0];
             }
+
             if (rango[1] !== '') {
                 filters.precio.$lte = rango[1];
             }
@@ -41,13 +44,14 @@ router.get('/', function(req, res) {
     }
 
     if (typeof req.query.nombre !== 'undefined') {
-        filters.nombre = new RegExp('^' + req.query.nombre, "i");
+        filters.nombre = new RegExp('^' + req.query.nombre, 'i');
     }
 
     Anuncio.list(start, limit, sort, includeTotal, filters, function(err, result) {
         if (err) {
             return res.status(500).json({ok: false, error: {code: 500, message: err.message}});
         }
+
         res.json({ok: true, result: result});
     });
 });

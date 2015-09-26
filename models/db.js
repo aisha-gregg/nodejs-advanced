@@ -1,7 +1,7 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var db = mongoose.connection;
+let mongoose = require('mongoose');
+let db = mongoose.connection;
 
 db.on('error', function(err) {
     console.error('mongodb connection error:', err);

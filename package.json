@@ -17,7 +17,8 @@
     "jsonwebtoken": "^5.0.5",
     "mongoose": "^4.1.7",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "validator": "^4.0.6"
   },
   "devDependencies": {
     "jscs": "^2.1.1",
