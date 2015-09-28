@@ -1,6 +1,7 @@
 'use strict';
 
 let mongoose = require('mongoose');
+let hash = require('hash.js');
 
 let usuarioSchema = mongoose.Schema({
     nombre: String,
@@ -39,6 +40,11 @@ usuarioSchema.statics.createRecord = function(nuevo, cb) {
         if (user) {
             return cb({code: 409, message: 'user_email_duplicated'});
         } else {
+
+            // Hago hash de la password
+            let hashedClave = hash.sha256().update(nuevo.clave).digest('hex');
+
+            nuevo.clave = hashedClave;
 
             // creo el usuario
             new Usuario(nuevo).save(cb);

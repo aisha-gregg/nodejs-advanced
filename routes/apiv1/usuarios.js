@@ -10,6 +10,7 @@ let jwt = require('jsonwebtoken');
 let config = require('../../local_config');
 let errors = require('../../lib/errors');
 let lang = require('../../lib/lang');
+let hash = require('hash.js');
 
 router.post('/authenticate', function(req, res) {
 
@@ -62,7 +63,7 @@ router.post('/register', function(req, res) {
         clave: req.body.clave
     };
 
-    Usuario.createRecord(nuevo, function(err, creado) {
+    Usuario.createRecord(nuevo, function(err) {
         if (err) {
             return errors(err, req.lang).json(res);
         }
@@ -70,8 +71,7 @@ router.post('/register', function(req, res) {
         // usuario creado
         return res.json({
             ok: true,
-            message: lang.translate('users_user_created'),
-            user: creado
+            message: lang.translate('users_user_created')
         });
 
     });
