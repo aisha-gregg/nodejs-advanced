@@ -77,15 +77,15 @@ Result:
             "nombre": "iPhone 3GS",
             "venta": false,
             "precio": 50,
-            "foto": "iphone.png",
+            "foto": "/images/anuncios/iphone.png",
             "__v": 0,
             "tags": [
               "lifestyle",
               "mobile"
             ]
           }
-          
-        ]
+        ],
+        "total": 1
       }
     }
 

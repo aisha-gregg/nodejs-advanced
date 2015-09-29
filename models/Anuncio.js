@@ -1,6 +1,7 @@
 'use strict';
 
 let mongoose = require('mongoose');
+var configAnuncios = require('../local_config').anuncios;
 
 //var tagSchema = mongoose.Schema({
 //    nombre: String
@@ -73,6 +74,13 @@ anuncioSchema.statics.list = function(startRow, numRows, sortField, includeTotal
 
     return query.exec(function(err, rows) {
         if (err) { return cb(err);}
+
+        // poner prefijo a imagenes
+        rows.forEach((row)=> {
+            if (row.foto) {
+                row.foto = configAnuncios.imagesURLBasePath + row.foto;
+            }
+        });
 
         let result = {rows: rows};
 
