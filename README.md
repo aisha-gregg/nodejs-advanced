@@ -5,23 +5,39 @@ Api for the iOS/Android apps.
 
 ## Deploy
 
-Install dependencies
-npm install
+### Install dependencies  
+    
+    npm install
 
-Configure
+### Configure  
+
 Review models/db.js to set database configuration
 
-Init database
-npm run installDB
+### Init database
+
+    npm run installDB
 
 ## Start
-npm start (now including nodemon & debug log)
+
+To start a single instance:
+    
+    npm start
+
+To start in cluster mode: 
+
+    npm run cluster  
+
+To start a single instance in debug mode:
+
+    npm run debug (including nodemon & debug log)
 
 ## Test
-npm test (pending to create, the client specified not to do now)
+
+    npm test (pending to create, the client specified not to do now)
 
 ## JSHint & JSCS
-npm run hints
+
+    npm run hints
 
 ## API v1 info
 
