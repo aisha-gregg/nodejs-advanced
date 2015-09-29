@@ -71,12 +71,12 @@ function initUsuarios(cb) {
     Usuario.remove({}, ()=> {
 
         var usuarios = [
-            {nombre: 'admin', email: 'jamg44@gmail.com', clave: '123'}
+            {nombre: 'admin', email: 'jamg44@gmail.com', clave: '123456'}
         ];
 
         async.eachSeries(usuarios, Usuario.createRecord, (err)=> {
             if (err) {
-                return process.exit(1);
+                return cb(err);
             }
 
             console.log(`Se han cargado ${usuarios.length} usuarios.`);
