@@ -4,8 +4,8 @@ let mongoose = require('mongoose');
 let hash = require('hash.js');
 
 let usuarioSchema = mongoose.Schema({
-    nombre: String,
-    email: String,
+    nombre: { type: String, index: true },
+    email: { type: String, index: true },
     clave: String
 });
 
