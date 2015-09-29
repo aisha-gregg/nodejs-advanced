@@ -90,5 +90,18 @@ Result:
     }
 
 
+### GET /anuncios/tags
 
+Return the list of available tags for the resource anuncios.
 
+Result: 
+
+    {
+      "ok": true,
+      "allowed_tags": [
+        "work",
+        "lifestyle",
+        "motor",
+        "mobile"
+      ]
+    }

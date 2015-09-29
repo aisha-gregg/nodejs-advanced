@@ -56,4 +56,9 @@ router.get('/', function(req, res) {
     });
 });
 
+// Return the list of available tags
+router.get('/tags', function(req, res) {
+    res.json({ok: true, allowedTags: Anuncio.allowedTags()});
+});
+
 module.exports = router;

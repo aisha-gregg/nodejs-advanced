@@ -15,6 +15,13 @@ let anuncioSchema = mongoose.Schema({
 });
 
 /**
+ * lista de tags permitidos
+ */
+anuncioSchema.statics.allowedTags = function() {
+    return ['work', 'lifestyle', 'motor', 'mobile'];
+};
+
+/**
  * carga un json de anuncios
  */
 anuncioSchema.statics.cargaJson = function(fichero, cb) {
