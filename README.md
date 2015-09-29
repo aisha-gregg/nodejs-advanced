@@ -1,4 +1,7 @@
-# nodepop
+
+# NodePop
+
+Api for the iOS/Android apps.
 
 ## Deploy
 
@@ -15,15 +18,30 @@ npm run installDB
 npm start (now including nodemon & debug log)
 
 ## Test
-npm test (pending to create, the cliente specified not to do now)
+npm test (pending to create, the client specified not to do now)
 
-## JSHint
+## JSHint & JSCS
 npm run hints
 
-## JSCS
-npm run jscs
-
 ## API v1 info
+
+
+### Base Path
+
+The API can be used with the path: 
+[API V1](/apiv1/anuncios)
+
+### Security
+
+The API uses JSON Web Token to handle users. First you will need to call /usuarios/register to create a user.  
+
+Then call /usuarios/authenticate to obtain a token.
+  
+Next calls will need to have the token in:  
+
+- Header: x-access-token: eyJ0eXAiO...
+- Body: { token: eyJ0eXAiO... }
+- Query string: ?token=eyJ0eXAiO...
 
 ### Language
 
@@ -32,6 +50,7 @@ change language make the request with the header x-lang set to other language,
 i.e. x-lang: es 
 
 ### Error example
+
     {
       "ok": false,
       "error": {
@@ -40,11 +59,22 @@ i.e. x-lang: es
       }
     }
 
+### POST /usuarios/register
+
+**Input Body**: { nombre, email, clave}
+
+**Result:** 
+
+    {
+      "ok": true, 
+      "message": "user created!"
+    }
+
 ### POST /usuarios/authenticate
 
-Input Body: { email, clave}
+**Input Body**: { email, clave}
 
-Result: 
+**Result:** 
 
     {
       "ok": true, 
@@ -53,20 +83,20 @@ Result:
 
 ### GET /anuncios
 
-Input Query: 
+**Input Query**: 
 
-start: {int} skip records
-limit: {int} limit to records
-sort: {string} field name to sort by
-includeTotal: {bool} whether to include the count of total records without filters
-tag: {string} tag name to filter
-venta: {bool} filter by venta or not
-precio: {range} filter by price range, examples 10-90, -90, 10- 
-nombre: {string} filter names beginning with the string
+start: {int} skip records  
+limit: {int} limit to records  
+sort: {string} field name to sort by  
+includeTotal: {bool} whether to include the count of total records without filters  
+tag: {string} tag name to filter  
+venta: {bool} filter by venta or not  
+precio: {range} filter by price range, examples 10-90, -90, 10-   
+nombre: {string} filter names beginning with the string  
 
 Input query example: ?start=0&limit=2&sort=precio&includeTotal=true&tag=mobile&venta=true&precio=-90&nombre=bi
 
-Result: 
+**Result:** 
 
     {
       "ok": true,
@@ -94,7 +124,7 @@ Result:
 
 Return the list of available tags for the resource anuncios.
 
-Result: 
+**Result:** 
 
     {
       "ok": true,
