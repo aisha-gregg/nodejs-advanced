@@ -151,3 +151,24 @@ Return the list of available tags for the resource anuncios.
         "mobile"
       ]
     }
+
+### POST /pushtokens
+
+Save user pushtoken { pushtoken, plataforma, idusuario}
+
+idusuario is optional.  
+plataforma can be 'ios' or 'android'  
+
+**Result:** 
+
+    {
+      "ok": true,
+      "created": {
+        "__v": 0,
+        "token": "123456",
+        "usuario": "560ad58ff82387259adbf26c",
+        "plataforma": "android",
+        "createdAt": "2015-09-30T21:01:19.955Z",
+        "_id": "560c4b648b892ca73faac308"
+      }
+    }

@@ -9,6 +9,21 @@ let usuarioSchema = mongoose.Schema({
     clave: String
 });
 
+usuarioSchema.statics.exists = function(idusuario, cb) {
+    Usuario.findById(idusuario, function(err, user) {
+        if (err) {
+            return cb(err);
+        }
+
+        // si no existe devuelvo error
+        if (!user) {
+            return cb(null, false);
+        }
+
+        return cb(null, true);
+    });
+};
+
 usuarioSchema.statics.createRecord = function(nuevo, cb) {
     // validaciones
     let valErrors = [];
