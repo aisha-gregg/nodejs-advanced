@@ -59,6 +59,14 @@ if (app.get('env') === 'development') {
     /*jshint unused: false*/
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
+        if (req.path.match(/\/apiv\d+/)) {
+            // llamada de API, devuelvo JSON
+            return res.json({
+                ok: false,
+                error: {code: err.status || 500, message: err.message, err: err}
+            });
+        }
+
         res.render('error', {
             message: err.message,
             error: err
@@ -72,6 +80,14 @@ if (app.get('env') === 'development') {
 /*jshint unused: false*/
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
+    if (req.path.match(/\/apiv\d+/)) {
+        // llamada de API, devuelvo JSON
+        return res.json({
+            ok: false,
+            error: {code: err.status || 500, message: err.message, err: err}
+        });
+    }
+
     res.render('error', {
         message: err.message,
         error: {}
