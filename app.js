@@ -10,8 +10,13 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 /* jshint ignore:start */
-var db = require('./models/db');
+var db = require('./lib/connectMongoose');
 /* jshint ignore:end */
+
+// Cargamos las definiciones de todos nuestros modelos
+require('./models/Anuncio');
+require('./models/Usuario');
+require('./models/PushToken');
 
 var app = express();
 

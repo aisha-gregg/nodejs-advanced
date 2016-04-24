@@ -3,10 +3,6 @@
 let mongoose = require('mongoose');
 var configAnuncios = require('../local_config').anuncios;
 
-//var tagSchema = mongoose.Schema({
-//    nombre: String
-//});
-
 let anuncioSchema = mongoose.Schema({
     nombre: { type: String, index: true },
     venta: { type: Boolean, index: true },

@@ -1,9 +1,15 @@
 'use strict';
 
-var db = require('./models/db');
 var mongoose = require('mongoose');
 var readLine = require('readline');
 var async = require('async');
+
+var db = require('./lib/connectMongoose');
+
+// Cargamos las definiciones de todos nuestros modelos
+require('./models/Anuncio');
+require('./models/Usuario');
+require('./models/PushToken');
 
 db.once('open', function() {
 
