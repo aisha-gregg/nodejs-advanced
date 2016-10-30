@@ -1,81 +1,65 @@
 'use strict';
 
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-let mongoose = require('mongoose');
-let Usuario = mongoose.model('Usuario');
+const mongoose = require('mongoose');
+const Usuario = mongoose.model('Usuario');
 
-let jwt = require('jsonwebtoken');
-let config = require('../../local_config');
-let errors = require('../../lib/errors');
-let lang = require('../../lib/lang');
-let hash = require('hash.js');
+const jwt = require('jsonwebtoken');
+const config = require('../../local_config');
+const hash = require('hash.js');
 
-router.post('/authenticate', function(req, res) {
+router.post('/authenticate', function (req, res, next) {
 
-    let email = req.body.email;
-    let clave = req.body.clave;
+  const email = req.body.email;
+  const clave = req.body.clave;
 
-    // buscar el usuario
-    Usuario.findOne({email: email}, function(err, user) {
-        if (err) {
-            return errors(err, req.lang).json(res);
+  // buscar el usuario
+  Usuario.findOne({ email: email }, function (err, user) {
+    if (err) return next(err);
+
+    if (!user) {
+      return res.json({
+        ok: false, error: {
+          code: 401,
+          message: res.__('users_user_not_found')
         }
+      });
+    } else if (user) {
 
-        if (!user) {
-            return errors({code: 401, message: 'users_user_not_found' }, req.lang).json(res);
+      // hashear la candidata y comparar los hashes
+      const claveHash = hash.sha256().update(clave).digest('hex');
 
-            //return res.json({ ok: false, error: {code: 401, message: 'users_user_not_fount' }});
-        } else if (user) {
+      // la contraseña es la misma?
+      if (user.clave != claveHash) {
+        return res.json({
+          ok: false, error: {
+            code: 401,
+            message: res.__('users_wrong_password')
+          }
+        });
+      } else {
 
-            // hashear la candidata y comparar los hashes
-            clave = hash.sha256().update(clave).digest('hex');
+        // hemos encontrado el usuario y la clave es la misma
+        // le hacemos un token
+        const token = jwt.sign({ user: user }, config.jwt.secret, config.jwt.options);
 
-            // la contraseña es la misma?
-            if (user.clave != clave) {
-                return errors({code: 401, message: 'users_wrong_password' }, req.lang).json(res);
-            } else {
-
-                // hemos encontrado el usuario y la clave es la misma
-                // le hacemos un token
-                let token = jwt.sign({user: user}, config.jwt.secret, {
-                    expiresInMinutes: config.jwt.expiresInMinutes
-                });
-
-                // return the information including token as JSON
-                return res.json({
-                    ok: true,
-                    token: token
-                });
-
-            }
-        }
-    });
+        // return the information including token as JSON
+        return res.json({ ok: true, token: token });
+      }
+    }
+  });
 
 });
 
-router.post('/register', function(req, res) {
+router.post('/register', function (req, res, next) {
+  Usuario.createRecord(req.body, function (err) {
+    if (err) return next(err);
 
-    let nuevo = {
-        nombre: req.body.nombre,
-        email: req.body.email,
-        clave: req.body.clave
-    };
-
-    Usuario.createRecord(nuevo, function(err) {
-        if (err) {
-            return errors(err, req.lang).json(res);
-        }
-
-        // usuario creado
-        return res.json({
-            ok: true,
-            message: lang.translate('users_user_created')
-        });
-
-    });
-
+    // usuario creado
+    return res.json({ ok: true, message: res.__('users_user_created') });
+  });
 });
 
 module.exports = router;

@@ -1,29 +1,25 @@
 'use strict';
 
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-let mongoose = require('mongoose');
-let PushToken = mongoose.model('PushToken');
+const mongoose = require('mongoose');
+const PushToken = mongoose.model('PushToken');
 
-let errors = require('../../lib/errors');
+router.post('/', function (req, res, next) {
 
-router.post('/', function(req, res) {
+  const nuevo = {
+    token: req.body.pushtoken,
+    usuario: req.body.idusuario || undefined,
+    plataforma: req.body.plataforma
+  };
 
-    let nuevo = {
-        token: req.body.pushtoken,
-        usuario: req.body.idusuario || undefined,
-        plataforma: req.body.plataforma
-    };
+  PushToken.createRecord(nuevo, (err, creado) => {
+    if (err) return next(err);
 
-    PushToken.createRecord(nuevo, (err, creado)=> {
-        if (err) {
-            return errors(err, req.lang).json(res);
-        }
-
-        // return confirmation
-        return res.json({ok: true, created: creado});
-    });
+    // return confirmation
+    return res.json({ ok: true, created: creado });
+  });
 
 });
 

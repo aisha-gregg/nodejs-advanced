@@ -1,9 +1,13 @@
+'use strict';
+
 module.exports = {
-    jwt: {
-        secret: 'unacadenadetextosupersecretaquemeheinventado',
-        expiresInMinutes: 1440  // expires in 24 hours
-    },
-    anuncios: {
-        imagesURLBasePath: '/images/anuncios/'
+  jwt: {
+    secret: 'unacadenadetextosupersecretaquemeheinventado',
+    options: {
+      expiresIn: '2 days'
     }
+  },
+  anuncios: {
+    imagesURLBasePath: '/images/anuncios/'
+  }
 };

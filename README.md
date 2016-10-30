@@ -62,8 +62,8 @@ Next calls will need to have the token in:
 ### Language
 
 All requests that return error messages are localized to english, if you want to 
-change language make the request with the header x-lang set to other language, 
-i.e. x-lang: es 
+change language make the request with the header accept-language set to other language, 
+i.e. Accept-Language: es 
 
 ### Error example
 
@@ -156,7 +156,7 @@ Return the list of available tags for the resource anuncios.
 
 Save user pushtoken { pushtoken, plataforma, idusuario}
 
-idusuario is optional.  
+idusuario is optional.
 plataforma can be 'ios' or 'android'  
 
 **Result:** 

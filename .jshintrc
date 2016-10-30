@@ -1,7 +1,7 @@
 {
   "node": true,
   "esnext": true,
-  "globals": {},
+  "globals": {"__": false},
   "globalstrict": true,
   "quotmark": "single",
   "undef": true,
