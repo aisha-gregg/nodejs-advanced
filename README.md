@@ -1,7 +1,7 @@
 
 # NodePop
 
-[Demo](/anuncios) of the methods
+[Demo](/anuncios) of the methods (this link works only if you run the project)
 
 Api for the iOS/Android apps.
 
