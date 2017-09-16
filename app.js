@@ -59,7 +59,7 @@ app.use(function (req, res, next) {
 if (app.get('env') === 'development') {
   /*jshint unused: false*/
   app.use(function (err, req, res, next) {
-    console.error(err);
+    if (err.status && err.status >= 500) console.error(err);
     res.status(err.status || err.code || 500);
     if (isAPI(req)) { // llamada de API, devuelvo JSON
       return res.json({ ok: false,
@@ -76,7 +76,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 /*jshint unused: false*/
 app.use(function (err, req, res, next) {
-  console.error(err);
+  if (err.status && err.status >= 500) console.error(err);
   res.status(err.status || err.code || 500);
   if (isAPI(req)) { // llamada de API, devuelvo JSON
     return res.json({ ok: false,
