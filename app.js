@@ -14,8 +14,6 @@ const db = require('./lib/connectMongoose');
 
 // Cargamos las definiciones de todos nuestros modelos
 require('./models/Anuncio');
-require('./models/Usuario');
-require('./models/PushToken');
 
 const app = express();
 
@@ -46,8 +44,6 @@ app.use('/anuncios', require('./routes/anuncios'));
 
 // API v1
 app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
-app.use('/apiv1/usuarios', require('./routes/apiv1/usuarios'));
-app.use('/apiv1/pushtokens', require('./routes/apiv1/pushtokens'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

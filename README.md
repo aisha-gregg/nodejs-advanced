@@ -45,18 +45,6 @@ To start in development mode:
 The API can be used with the path: 
 [API V1](/apiv1/anuncios)
 
-### Security
-
-The API uses JSON Web Token to handle users. First you will need to call /usuarios/register to create a user.  
-
-Then call /usuarios/authenticate to obtain a token.
-  
-Next calls will need to have the token in:  
-
-- Header: x-access-token: eyJ0eXAiO...
-- Body: { token: eyJ0eXAiO... }
-- Query string: ?token=eyJ0eXAiO...
-
 ### Language
 
 All requests that return error messages are localized to english, if you want to 
@@ -71,28 +59,6 @@ i.e. Accept-Language: es
         "code": 401,
         "message": "Authentication failed. Wrong password."
       }
-    }
-
-### POST /usuarios/register
-
-**Input Body**: { nombre, email, clave}
-
-**Result:** 
-
-    {
-      "ok": true, 
-      "message": "user created!"
-    }
-
-### POST /usuarios/authenticate
-
-**Input Body**: { email, clave}
-
-**Result:** 
-
-    {
-      "ok": true, 
-      "token": "..."
     }
 
 ### GET /anuncios
@@ -148,25 +114,4 @@ Return the list of available tags for the resource anuncios.
         "motor",
         "mobile"
       ]
-    }
-
-### POST /pushtokens
-
-Save user pushtoken { pushtoken, plataforma, idusuario}
-
-idusuario is optional.
-plataforma can be 'ios' or 'android'  
-
-**Result:** 
-
-    {
-      "ok": true,
-      "created": {
-        "__v": 0,
-        "token": "123456",
-        "usuario": "560ad58ff82387259adbf26c",
-        "plataforma": "android",
-        "createdAt": "2015-09-30T21:01:19.955Z",
-        "_id": "560c4b648b892ca73faac308"
-      }
     }

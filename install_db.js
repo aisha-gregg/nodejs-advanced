@@ -8,8 +8,6 @@ const db = require('./lib/connectMongoose');
 
 // Cargamos las definiciones de todos nuestros modelos
 require('./models/Anuncio');
-require('./models/Usuario');
-require('./models/PushToken');
 
 db.once('open', function () {
 
@@ -33,8 +31,7 @@ db.once('open', function () {
 function runInstallScript() {
 
   async.series([
-      initAnuncios,
-      initUsuarios
+      initAnuncios
     ], (err) => {
       if (err) {
         console.error('Hubo un error: ', err);
@@ -67,23 +64,4 @@ function initAnuncios(cb) {
 
   });
 
-}
-
-function initUsuarios(cb) {
-  const Usuario = mongoose.model('Usuario');
-
-  Usuario.remove({}, ()=> {
-
-    const usuarios = [
-      { nombre: 'admin', email: 'jamg44@gmail.com', clave: '123456' }
-    ];
-
-    async.eachSeries(usuarios, Usuario.createRecord, (err)=> {
-      if (err) return cb(err);
-
-      console.log(`Se han cargado ${usuarios.length} usuarios.`);
-      return cb(null, usuarios.length);
-    });
-
-  });
 }

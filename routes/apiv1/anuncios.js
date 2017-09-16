@@ -5,13 +5,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Anuncio = mongoose.model('Anuncio');
 
-// Auth con JWT
-const jwtAuth = require('../../lib/jwtAuth');
-router.use(jwtAuth());
-
 router.get('/', (req, res, next) => {
-
-  //console.log('jwt decoded', req.decoded);
 
   const start = parseInt(req.query.start) || 0;
   const limit = parseInt(req.query.limit) || 1000; // nuestro api devuelve max 1000 registros
