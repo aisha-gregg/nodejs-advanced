@@ -6,3 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
+
+table tr td img {
+  max-height: 20px;
+}

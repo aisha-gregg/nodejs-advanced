@@ -1,9 +1,10 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const configAnuncios = require('../local_config').anuncios;
 const fs = require('fs');
 const flow = require('../lib/flowControl');
+const configAnuncios = require('../local_config').anuncios;
+const path = require('path');
 
 const anuncioSchema = mongoose.Schema({
   nombre: { type: String, index: true },
@@ -50,37 +51,27 @@ anuncioSchema.statics.createRecord = function (nuevo, cb) {
   new Anuncio(nuevo).save(cb);
 };
 
-anuncioSchema.statics.list = function (startRow, numRows, sortField, includeTotal, filters, cb) {
+anuncioSchema.statics.list = async function(filters, startRow, numRows, sortField, includeTotal, cb) {
 
   const query = Anuncio.find(filters);
-
   query.sort(sortField);
   query.skip(startRow);
   query.limit(numRows);
-
   //query.select('nombre venta');
 
-  return query.exec(function (err, rows) {
-    if (err) return cb(err);
+  const result = {};
 
-    // poner prefijo a imagenes
-    rows.forEach((row) => {
-      if (row.foto) {
-        row.foto = configAnuncios.imagesURLBasePath + row.foto;
-      }
-    });
+  if (includeTotal) {
+    result.total = await Anuncio.count();
+  }
+  result.rows = await query.exec();
 
-    const result = { rows: rows };
+  // poner ruta base a imagenes
+  const ruta = configAnuncios.imagesURLBasePath;
+  result.rows.forEach(r => r.foto = r.foto ? path.join(ruta, r.foto) : null );
 
-    if (!includeTotal) return cb(null, result);
-
-    // incluir propiedad total
-    Anuncio.count({}, (err, total) => {
-      if (err) return cb(err);
-      result.total = total;
-      return cb(null, result);
-    });
-  });
+  if (cb) return cb(null, result); // si me dan callback devuelvo los resultados por ahí
+  return result; // si no, los devuelvo por la promesa del async (async está en la primera linea de esta función)
 };
 
 var Anuncio = mongoose.model('Anuncio', anuncioSchema);

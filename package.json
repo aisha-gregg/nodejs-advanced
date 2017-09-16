@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "cluster": "node ./bin/cluster",
-    "debug": "DEBUG=nodepop:* nodemon ./bin/www",
+    "dev": "DEBUG=nodepop:* nodemon ./bin/www",
     "hints": "jshint . && ./node_modules/.bin/jscs . || true",
     "installDB": "node install_db.js"
   },

@@ -46,9 +46,9 @@ router.get('/', (req, res, next) => {
     filters.nombre = new RegExp('^' + req.query.nombre, 'i');
   }
 
-  Anuncio.list(start, limit, sort, includeTotal, filters, function (err, result) {
+  Anuncio.list(filters, start, limit, sort, includeTotal, function (err, anuncios) {
     if (err) return next(err);
-    res.json({ ok: true, result: result });
+    res.json({ ok: true, result: anuncios });
   });
 });
 

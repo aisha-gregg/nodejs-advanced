@@ -1,6 +1,8 @@
 
 # NodePop
 
+[Demo](/anuncios) of the methods
+
 Api for the iOS/Android apps.
 
 ## Deploy
@@ -23,13 +25,9 @@ To start a single instance:
     
     npm start
 
-To start in cluster mode: 
+To start in development mode:
 
-    npm run cluster  
-
-To start a single instance in debug mode:
-
-    npm run debug (including nodemon & debug log)
+    npm run dev (including nodemon & debug log)
 
 ## Test
 

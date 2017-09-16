@@ -2,16 +2,17 @@
 
 const router = require('express').Router();
 const fs = require('fs');
+const path = require('path');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-
-  // read the README.md file
-  fs.readFile(__dirname + '/../README.md', { encoding: 'utf8' }, (err, data)=> {
-    if (err) return next(new Error(`Can't read README.md file`));
-    res.render('index', { title: 'NodePop', readme: data });
-  });
-
+router.get('/', async function (req, res, next) {
+  try {
+    const filename = path.join(__dirname, '../README.md');
+    const readme = await new Promise((res, rej) => 
+      fs.readFile(filename, 'utf8', (err, data) => err ? rej(err) : res(data) )
+    );
+    res.render('index', { readme });
+  } catch (err) { return next(err); }
 });
 
 module.exports = router;

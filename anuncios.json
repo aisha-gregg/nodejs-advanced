@@ -3,14 +3,14 @@
     {
       "nombre": "Bicicleta",
       "venta": true,
-      "precio": 230.15,
+      "precio": 23015,
       "foto": "bici.jpg",
       "tags": [ "lifestyle", "motor"]
     },
     {
       "nombre": "iPhone 3GS",
       "venta": false,
-      "precio": 50.00,
+      "precio": 5000,
       "foto": "iphone.png",
       "tags": [ "lifestyle", "mobile"]
     }

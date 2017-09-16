@@ -37,8 +37,12 @@ i18n.configure({
 });
 app.use(i18n.init);
 
+// Global Template variables
+app.locals.title = 'NodePop';
+
 // Web
 app.use('/', require('./routes/index'));
+app.use('/anuncios', require('./routes/anuncios'));
 
 // API v1
 app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
@@ -52,41 +56,39 @@ app.use(function (req, res, next) {
   next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  /*jshint unused: false*/
-  app.use(function (err, req, res, next) {
-    if (err.status && err.status >= 500) console.error(err);
-    res.status(err.status || err.code || 500);
-    if (isAPI(req)) { // llamada de API, devuelvo JSON
-      return res.json({ ok: false,
-        error: { code: err.code || err.status || 500, message: err.message, err: err }
-      });
-    }
-
-    res.render('error', { message: err.message, error: err });
-  });
-  /*jshint unused: true*/
-}
-
-// production error handler
-// no stacktraces leaked to user
-/*jshint unused: false*/
-app.use(function (err, req, res, next) {
-  if (err.status && err.status >= 500) console.error(err);
-  res.status(err.status || err.code || 500);
-  if (isAPI(req)) { // llamada de API, devuelvo JSON
-    return res.json({ ok: false,
-      error: { code: err.code || err.status || 500, message: err.message, err: {} }
-    });
+// error handler
+app.use(function(err, req, res, next) {
+  
+  if (err.array) { // validation error
+    err.status = 422;
+    const errInfo = err.array({ onlyFirstError: true })[0];
+    err.message = isAPI(req) ?
+      { message: 'Not valid', errors: err.mapped()}
+      : `Not valid - ${errInfo.param} ${errInfo.msg}`;
   }
 
-  res.render('error', { message: err.message, error: {} });
+  // establezco el status a la respuesta
+  err.status = err.status || 500;
+  res.status(err.status);
+
+  // si es un 500 lo pinto en el log
+  if (err.status && err.status >= 500) console.error(err);
+  
+  // si es una petición al API respondo JSON...
+  if (isAPI(req)) {
+    res.json({ success: false, error: err.message });
+    return;
+  }
+
+  // ...y si no respondo con HTML...
+
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.render('error');
 });
-/*jshint unused: true*/
 
 function isAPI(req) {
   return req.originalUrl.indexOf('/api') === 0;

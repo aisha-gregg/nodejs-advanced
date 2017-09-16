@@ -1,0 +1,58 @@
+<% include _header %>
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header"><a href="/" class="navbar-brand">Nodeapi</a></div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Lista de anuncios</h1>
+      <p class="lead">Listando: <%= anuncios.length %> de <%= total %></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover">
+        <thead><tr>
+          <th>Nombre</th>
+          <th>Venta</th>
+          <th style="text-align: right">Precio</th>
+          <th>Foto</th>
+          <th>Tags</th>
+          <th>#</th>
+        </tr></thead>
+        <tbody>
+<% anuncios.forEach(anuncio => { %>
+          <tr>
+            <td><%= anuncio.nombre %></td>
+            <td><%= anuncio.venta ? 'Si' : 'No' %></td>
+            <td style="text-align: right"><%= anuncio.precio / 100 %>€</td>
+            <td><img src="<%= anuncio.foto %>"></td>
+            <td><%= anuncio.tags %></td>
+            <td><%= anuncio._id %></td>
+          </tr>
+<% }) %>
+        </tbody>
+      </table>
+
+      <p>Ejemplos:</p>
+
+      <ul>
+        <li><a href="?">Todos (max. 1000)</a></li>
+        <li><a href="?start=2&limit=2">Paginado</a></li>
+        <li><a href="?sort=precio">Ordenado por precio ascendente</a></li>
+        <li><a href="?sort=-precio">Ordenado por precio descendente</a></li>
+        <li><a href="?tag=mobile">Con tag mobile</a></li>
+      </ul>
+
+    </div>
+  </div>
+
+  <a href="/">Volver a la home</a>
+
+</div>
+<% include _footer %>
