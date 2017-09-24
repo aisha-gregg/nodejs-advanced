@@ -6,7 +6,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const i18n = require('i18n');
+const i18n = require('./lib/i18nSetup');
 
 /* jshint ignore:start */
 const db = require('./lib/connectMongoose');
@@ -27,12 +27,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// registrar lenguajes
-i18n.configure({
-  directory: __dirname + '/locales',
-  defaultLocale: 'en',
-  register: global
-});
 app.use(i18n.init);
 
 // Global Template variables
@@ -47,7 +41,7 @@ app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  const err = new Error('Not Found');
+  const err = new Error(__('not_found'));
   err.status = 404;
   next(err);
 });
@@ -59,8 +53,8 @@ app.use(function(err, req, res, next) {
     err.status = 422;
     const errInfo = err.array({ onlyFirstError: true })[0];
     err.message = isAPI(req) ?
-      { message: 'Not valid', errors: err.mapped()}
-      : `Not valid - ${errInfo.param} ${errInfo.msg}`;
+      { message: __('not_valid'), errors: err.mapped()}
+      : `${__('not_valid')} - ${errInfo.param} ${errInfo.msg}`;
   }
 
   // establezco el status a la respuesta

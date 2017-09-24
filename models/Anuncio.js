@@ -42,7 +42,7 @@ anuncioSchema.statics.cargaJson = function (fichero, cb) {
       });
 
     } else {
-      return cb(new Error(fichero + ' está vacio!'));
+      return cb(new Error( __('empty_file', { file: fichero }) ));
     }
   });
 };
