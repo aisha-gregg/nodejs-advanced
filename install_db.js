@@ -3,7 +3,6 @@
 const mongoose = require('mongoose');
 const readLine = require('readline');
 const async = require('async');
-require('./lib/i18nSetup');
 
 const db = require('./lib/connectMongoose');
 
@@ -35,7 +34,7 @@ function runInstallScript() {
       initAnuncios
     ], (err) => {
       if (err) {
-        console.error( __('generic', { err }) );
+        console.error('Hubo un error: ', err);
         return process.exit(1);
       }
 
