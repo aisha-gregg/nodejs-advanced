@@ -24,28 +24,33 @@ anuncioSchema.statics.allowedTags = function () {
 /**
  * carga un json de anuncios
  */
-anuncioSchema.statics.cargaJson = function (fichero, cb) {
-  // Encodings: https://nodejs.org/api/buffer.html
-  fs.readFile(fichero, { encoding: 'utf8' }, function (err, data) {
-    if (err) return cb(err);
-
-    console.log(fichero + ' leido.');
-
-    if (data) {
-
-      const anuncios = JSON.parse(data).anuncios;
-      const numAnuncios = anuncios.length;
-
-      flow.serialArray(anuncios, Anuncio.createRecord, (err)=> {
-        if (err) return cb(err);
-        return cb(null, numAnuncios);
-      });
-
-    } else {
-      return cb(new Error(fichero + ' está vacio!'));
-    }
+anuncioSchema.statics.cargaJson = async function (fichero) {
+  
+  // Using a callback function with async/await
+  const data = await new Promise((resolve, reject) => {
+    // Encodings: https://nodejs.org/api/buffer.html
+    fs.readFile(fichero, { encoding: 'utf8' }, (err, data) => {
+      return err ? reject(err) : resolve(data);
+    });
   });
+
+  console.log(fichero + ' leido.');
+
+  if (!data) {
+    throw new Error(fichero + ' está vacio!');
+  }
+
+  const anuncios = JSON.parse(data).anuncios;
+  const numAnuncios = anuncios.length;
+
+  for (var i = 0; i < anuncios.length; i++) {
+    await (new Anuncio(anuncios[i])).save();
+  }
+
+  return numAnuncios;
+
 };
+
 
 anuncioSchema.statics.createRecord = function (nuevo, cb) {
   new Anuncio(nuevo).save(cb);
@@ -75,3 +80,5 @@ anuncioSchema.statics.list = async function(filters, startRow, numRows, sortFiel
 };
 
 var Anuncio = mongoose.model('Anuncio', anuncioSchema);
+
+module.exports = Anuncio;

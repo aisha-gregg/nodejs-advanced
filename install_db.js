@@ -7,61 +7,50 @@ const async = require('async');
 const db = require('./lib/connectMongoose');
 
 // Cargamos las definiciones de todos nuestros modelos
-require('./models/Anuncio');
+const Anuncio = require('./models/Anuncio');
 
-db.once('open', function () {
-
-  const rl = readLine.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-
-  rl.question('Are you sure you want to empty DB? (no) ', function (answer) {
-    rl.close();
+db.once('open', async function () {
+  try {
+    const answer = await askUser('Are you sure you want to empty DB? (no) ');
     if (answer.toLowerCase() === 'yes') {
-      runInstallScript();
+      
+      // Inicializar nuestros modelos
+      await initAnuncios();
+      
     } else {
       console.log('DB install aborted!');
-      return process.exit(0);
     }
-  });
-
+    return process.exit(0);
+  } catch(err) {
+    console.log('Error!', err);
+    return process.exit(1);
+  }
 });
 
-function runInstallScript() {
-
-  async.series([
-      initAnuncios
-    ], (err) => {
-      if (err) {
-        console.error('Hubo un error: ', err);
-        return process.exit(1);
-      }
-
-      return process.exit(0);
-    }
-  );
-
+function askUser(question) {
+  return new Promise((resolve, reject) => {
+    const rl = readLine.createInterface({
+      input: process.stdin, output: process.stdout
+    });
+    rl.question(question, answer => {
+      rl.close();
+      resolve(answer);
+    });
+  });
 }
 
-function initAnuncios(cb) {
-  const Anuncio = mongoose.model('Anuncio');
+async function initAnuncios() {
 
-  Anuncio.remove({}, ()=> {
+  await Anuncio.remove({});
+  console.log('Anuncios borrados.');
 
-    console.log('Anuncios borrados.');
+  // Cargar anuncios.json
+  const fichero = './anuncios.json';
 
-    // Cargar anuncios.json
-    const fichero = './anuncios.json';
-    console.log('Cargando ' + fichero + '...');
+  console.log('Cargando ' + fichero + '...');
+  const numLoaded = await Anuncio.cargaJson(fichero);
+  console.log(`Se han cargado ${numLoaded} anuncios.`);
 
-    Anuncio.cargaJson(fichero, (err, numLoaded)=> {
-      if (err) return cb(err);
-
-      console.log(`Se han cargado ${numLoaded} anuncios.`);
-      return cb(null, numLoaded);
-    });
-
-  });
+  return numLoaded;
 
 }
