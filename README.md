@@ -7,7 +7,7 @@ Api for the iOS/Android apps.
 
 ## Deploy
 
-### Install dependencies  
+### Install dependencies
     
     npm install
 
@@ -42,14 +42,8 @@ To start in development mode:
 
 ### Base Path
 
-The API can be used with the path: 
+The API can be used with the path:
 [API V1](/apiv1/anuncios)
-
-### Language
-
-All requests that return error messages are localized to english, if you want to 
-change language make the request with the header accept-language set to other language, 
-i.e. Accept-Language: es 
 
 ### Error example
 
@@ -57,22 +51,22 @@ i.e. Accept-Language: es
       "ok": false,
       "error": {
         "code": 401,
-        "message": "Authentication failed. Wrong password."
+        "message": "This is the error message."
       }
     }
 
 ### GET /anuncios
 
-**Input Query**: 
+**Input Query**:
 
-start: {int} skip records  
-limit: {int} limit to records  
-sort: {string} field name to sort by  
-includeTotal: {bool} whether to include the count of total records without filters  
-tag: {string} tag name to filter  
-venta: {bool} filter by venta or not  
-precio: {range} filter by price range, examples 10-90, -90, 10-   
-nombre: {string} filter names beginning with the string  
+start: {int} skip records
+limit: {int} limit to records
+sort: {string} field name to sort by
+includeTotal: {bool} whether to include the count of total records without filters
+tag: {string} tag name to filter
+venta: {bool} filter by venta or not
+precio: {range} filter by price range, examples 10-90, -90, 10-
+nombre: {string} filter names beginning with the string
 
 Input query example: ?start=0&limit=2&sort=precio&includeTotal=true&tag=mobile&venta=true&precio=-90&nombre=bi
 
