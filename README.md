@@ -13,7 +13,7 @@ Api for the iOS/Android apps.
 
 ### Configure  
 
-Review models/db.js to set database configuration
+Review lib/connectMongoose.js to set database configuration
 
 ### Init database
 
