@@ -2,7 +2,9 @@
 
 <div class="navbar navbar-default navbar-fixed-top">
   <div class="container">
-    <div class="navbar-header"><a href="/" class="navbar-brand">Nodeapi</a></div>
+    <div class="navbar-header">
+      <a href="/" class="navbar-brand">Nodeapi</a>
+    </div>
   </div>
 </div>
 
@@ -17,25 +19,27 @@
   <div class="row">
     <div class="col-md-12">
       <table class="table table-hover">
-        <thead><tr>
-          <th>Nombre</th>
-          <th>Venta</th>
-          <th style="text-align: right">Precio</th>
-          <th>Foto</th>
-          <th>Tags</th>
-          <th>#</th>
-        </tr></thead>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Venta</th>
+            <th style="text-align: right">Precio</th>
+            <th>Foto</th>
+            <th>Tags</th>
+            <th>#</th>
+          </tr>
+        </thead>
         <tbody>
-<% anuncios.forEach(anuncio => { %>
+          <% anuncios.forEach(anuncio => { %>
           <tr>
             <td><%= anuncio.nombre %></td>
             <td><%= anuncio.venta ? 'Si' : 'No' %></td>
             <td style="text-align: right"><%= anuncio.precio / 100 %>€</td>
-            <td><img src="<%= anuncio.foto %>"></td>
+            <td><img src="<%= anuncio.foto %>" /></td>
             <td><%= anuncio.tags %></td>
             <td><%= anuncio._id %></td>
           </tr>
-<% }) %>
+          <% }) %>
         </tbody>
       </table>
 
@@ -48,11 +52,9 @@
         <li><a href="?sort=-precio">Ordenado por precio descendente</a></li>
         <li><a href="?tag=mobile">Con tag mobile</a></li>
       </ul>
-
     </div>
   </div>
 
   <a href="/">Volver a la home</a>
-
 </div>
 <% include _footer %>

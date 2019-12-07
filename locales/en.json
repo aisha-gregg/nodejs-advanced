@@ -1,6 +1,6 @@
 {
-	"empty_file": "the file {{file}} is empty",
-	"not_found": "Not Found",
-	"not_valid": "Not valid",
-	"generic": "There was an error: {{err}}"
+  "empty_file": "the file {{file}} is empty",
+  "not_found": "Not Found",
+  "not_valid": "Not valid",
+  "generic": "There was an error: {{err}}"
 }
