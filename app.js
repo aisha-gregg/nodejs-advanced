@@ -1,5 +1,6 @@
 "use strict";
 
+const authenticateMiddleware = require("./middlewares/authentication-middleware");
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
@@ -25,6 +26,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Global Template variables
 app.locals.title = "NodePop";
+
+app.use("/apiv1/authenticate", require("./routes/apiv1/authenticate"));
+
+app.use(authenticateMiddleware);
 
 // Web
 app.use("/", require("./routes/index"));
