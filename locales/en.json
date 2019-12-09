@@ -5,6 +5,7 @@
   "generic": "There was an error: {{err}}",
   "ads_list": "Ads list",
   "listing": "Listing",
+  "of": "of",
   "name": "Name",
   "onsale": "On Sale",
   "price": "Price",
@@ -13,5 +14,7 @@
   "pagination": "Pagination",
   "ascending_order": "Ascending",
   "descending_order": "Descending",
-  "mobile": "Mobile"
+  "mobile": "Mobile",
+  "examples": "Examples",
+  "return": "Return to home"
 }

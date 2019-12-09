@@ -5,6 +5,7 @@
   "generic": "Hubo un error: {{err}}",
   "ads_list": "Lista de anuncios",
   "listing": "Listando",
+  "of": "de",
   "name": "Nombre",
   "onsale": "En venta",
   "price": "Precio",
@@ -13,5 +14,7 @@
   "pagination": "Paginación",
   "ascending_order": "Ascendente",
   "descending_order": "Descendente",
-  "mobile": "Movíl"
+  "mobile": "Movíl",
+  "examples": "Ejemplos",
+  "return": "Volver a la home"
 }

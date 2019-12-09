@@ -18,7 +18,10 @@
   <div class="row">
     <div class="col-md-12">
       <h1><%= translation.ads_list %></h1>
-      <p class="lead">Listando: <%= anuncios.length %> de <%= total %></p>
+      <p class="lead">
+        <%= translation.listing %> <%= anuncios.length %> <%= translation.of %>
+        <%= total %>
+      </p>
     </div>
   </div>
 
@@ -39,7 +42,7 @@
           <% anuncios.forEach(anuncio => { %>
           <tr>
             <td><%= anuncio.nombre %></td>
-            <td><%= anuncio.venta ? 'Si' : 'No' %></td>
+            <td><%= anuncio.venta ? '✔' : '❌' %></td>
             <td style="text-align: right"><%= anuncio.precio / 100 %>€</td>
             <td><img src="<%= anuncio.foto %>" /></td>
             <td><%= anuncio.tags %></td>
@@ -49,7 +52,7 @@
         </tbody>
       </table>
 
-      <p>Ejemplos:</p>
+      <p><%= translation.examples %></p>
 
       <ul>
         <li><a href="?"><%= translation.all %>(max. 1000)</a></li>
@@ -61,7 +64,7 @@
     </div>
   </div>
 
-  <a href="/">Volver a la home</a>
+  <a href="/"><%= translation.return %></a>
 </div>
 <% include _footer %>
 
