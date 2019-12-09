@@ -1,5 +1,9 @@
 "use strict";
 
+const send = require("../../messager/send");
+const fs = require("fs");
+const path = require("path");
+const uploadMiddleware = require("../../middlewares/upload-middleware");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
@@ -45,6 +49,18 @@ router.get("/", (req, res, next) => {
   ) {
     if (err) return next(err);
     res.json({ ok: true, result: anuncios });
+  });
+});
+
+router.post("/", uploadMiddleware.single("foto"), function(req, res) {
+  const photo = req.file.originalname;
+  fs.writeFileSync(
+    path.resolve(__dirname, "../../public/immages/anuncios", photo)
+  );
+  const newAd = new Anuncio({ ...req.body, foto: photo });
+  newAd.save().then(() => {
+    send(photo);
+    res.json({ ok: true });
   });
 });
 
