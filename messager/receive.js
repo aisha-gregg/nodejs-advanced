@@ -17,13 +17,13 @@ amqp.connect("amqp://localhost", (error0, connection) => {
       durable: false
     });
 
-    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
+    console.log(`[*] Waiting for messages in ${queue}. To exit press CTRL+C`);
 
     channel.consume(
       queue,
       async photo => {
         const photoName = photo.content.toString();
-        console.log(" [x] Received %s", photoName);
+        console.log(`[x] Received ${photoName}`);
         const image = await jimp.read(
           path.resolve(__dirname, "../public/images/anuncios", photoName)
         );

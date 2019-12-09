@@ -1,6 +1,6 @@
 const amqp = require("amqplib/callback_api");
 
-function createThumbnail(photo) {
+function send(photo) {
   amqp.connect("amqp://localhost", (error0, connection) => {
     if (error0) {
       throw error0;
@@ -17,7 +17,7 @@ function createThumbnail(photo) {
       });
 
       channel.sendToQueue(queue, Buffer.from(photo));
-      console.log(" [x] Sent %s", photo);
+      console.log(`[x] Sent ${photo}`);
     });
 
     setTimeout(() => {
@@ -25,4 +25,4 @@ function createThumbnail(photo) {
     }, 500);
   });
 }
-module.exports = createThumbnail;
+module.exports = send;
