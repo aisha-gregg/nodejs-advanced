@@ -23,7 +23,7 @@ Review lib/connectMongoose.js to set database configuration
 To run authentication set ACESS_KEY in an environment variable:
 
 - Windows: `$env:ACCESS_KEY=<AN ACCESS KEY>`
-- Linux: `set ACCESS_KEY=<AN ACCESS KEY>`
+- Linux: `export ACCESS_KEY=<AN ACCESS KEY>`
 
 To start a single instance:
 

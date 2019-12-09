@@ -27,7 +27,10 @@ router.get("/", async function(req, res, next) {
       sort,
       includeTotal
     );
-    res.render("anuncios", { total, anuncios: rows });
+    res.render("anuncios", {
+      total,
+      anuncios: rows
+    });
   } catch (err) {
     return res.next(err);
   }

@@ -6,12 +6,18 @@
       <a href="/" class="navbar-brand">Nodeapi</a>
     </div>
   </div>
+  <div class="language-selector">
+    <select name="language" id="language">
+      <option value="en">English</option>
+      <option value="es">Spanish</option>
+    </select>
+  </div>
 </div>
 
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h1>Lista de anuncios</h1>
+      <h1><%= translation.ads_list %></h1>
       <p class="lead">Listando: <%= anuncios.length %> de <%= total %></p>
     </div>
   </div>
@@ -21,11 +27,11 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Venta</th>
-            <th style="text-align: right">Precio</th>
-            <th>Foto</th>
-            <th>Tags</th>
+            <th><%= translation.name %></th>
+            <th><%= translation.onsale %></th>
+            <th style="text-align: right"><%= translation.price %></th>
+            <th><%= translation.photo %></th>
+            <th><%= translation.tags %></th>
             <th>#</th>
           </tr>
         </thead>
@@ -46,11 +52,11 @@
       <p>Ejemplos:</p>
 
       <ul>
-        <li><a href="?">Todos (max. 1000)</a></li>
-        <li><a href="?start=2&limit=2">Paginado</a></li>
-        <li><a href="?sort=precio">Ordenado por precio ascendente</a></li>
-        <li><a href="?sort=-precio">Ordenado por precio descendente</a></li>
-        <li><a href="?tag=mobile">Con tag mobile</a></li>
+        <li><a href="?"><%= translation.all %>(max. 1000)</a></li>
+        <li><a href="?start=2&limit=2"><%= translation.pagination %></a></li>
+        <li><a href="?sort=precio"><%= translation.ascending_order%></a></li>
+        <li><a href="?sort=-precio"><%= translation.descending_order%></a></li>
+        <li><a href="?tag=mobile"><%= translation.mobile%></a></li>
       </ul>
     </div>
   </div>
@@ -58,3 +64,22 @@
   <a href="/">Volver a la home</a>
 </div>
 <% include _footer %>
+
+<script>
+  const language = document.querySelector("#language");
+
+  window.onload = event => {
+    const value = localStorage.getItem("locale");
+    if (value === null) {
+      language.value = "en";
+    } else {
+      language.value = value;
+    }
+  };
+
+  language.addEventListener("change", event => {
+    const locale = event.target.value;
+    localStorage.setItem("locale", locale);
+    window.location.href = `?clang=${locale}`;
+  });
+</script>

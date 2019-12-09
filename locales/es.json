@@ -2,5 +2,16 @@
   "empty_file": "el fichero {{file}} está vacio",
   "not_found": "No encontrado",
   "not_valid": "No válido",
-  "generic": "Hubo un error: {{err}}"
+  "generic": "Hubo un error: {{err}}",
+  "ads_list": "Lista de anuncios",
+  "listing": "Listando",
+  "name": "Nombre",
+  "onsale": "En venta",
+  "price": "Precio",
+  "photo": "Foto",
+  "tags": "Tags",
+  "pagination": "Paginación",
+  "ascending_order": "Ascendente",
+  "descending_order": "Descendente",
+  "mobile": "Movíl"
 }

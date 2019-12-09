@@ -6,6 +6,7 @@ const path = require("path");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const i18n = require("i18n-express");
 
 require("./lib/connectMongoose");
 
@@ -23,17 +24,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  i18n({
+    translationsPath: path.join(__dirname, "locales"),
+    siteLangs: ["en", "es"],
+    textsVarName: "translation"
+  })
+);
 
 // Global Template variables
 app.locals.title = "NodePop";
 
 app.use("/apiv1/authenticate", require("./routes/apiv1/authenticate"));
 
-app.use(authenticateMiddleware);
-
 // Web
 app.use("/", require("./routes/index"));
 app.use("/anuncios", require("./routes/anuncios"));
+
+// Only authenticate the API
+app.use(authenticateMiddleware);
 
 // API v1
 app.use("/apiv1/anuncios", require("./routes/apiv1/anuncios"));
@@ -73,6 +82,7 @@ app.use(function(err, req, res, next) {
 
   // set locals, only providing error in development
   res.locals.message = err.message;
+
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
