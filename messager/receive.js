@@ -22,13 +22,14 @@ amqp.connect("amqp://localhost", (error0, connection) => {
     channel.consume(
       queue,
       async photo => {
-        console.log(" [x] Received %s", photo.content.toString());
+        const photoName = photo.content.toString();
+        console.log(" [x] Received %s", photoName);
         const image = await jimp.read(
-          path.resolve(__dirname, "../public/images/anuncios", photo)
+          path.resolve(__dirname, "../public/images/anuncios", photoName)
         );
         await image.resize(100, jimp.AUTO);
         await image.writeAsync(
-          path.resolve(__dirname, "../public/images/anuncios", photo)
+          path.resolve(__dirname, "../public/images/anuncios", photoName)
         );
       },
       {
